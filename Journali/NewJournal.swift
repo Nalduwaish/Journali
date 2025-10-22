@@ -127,15 +127,15 @@ struct NewJournal: View {
     var body: some View {
         ZStack(alignment: .top) {
             // ===== Background
-            ContainerRelativeShape()
-                .fill(Color(red: 28/255, green: 28/255, blue: 30/255))
-                .ignoresSafeArea()
+            
+             ContainerRelativeShape()
+                 .fill(Color(red: 28/255, green: 28/255, blue: 30/255))
 
-            // ===== Grabber
-            Capsule()
-                .fill(Color.gray.opacity(0.5))
-                .frame(width: 40, height: 5)
-                .padding(.top, 12)
+     
+                 Capsule()
+                         .fill(Color.gray.opacity(0.5))
+                         .frame(width: 40, height: 5)
+                         .padding(.top, 12)
 
             // ===== Top bar
             VStack(spacing: 0) {
@@ -165,7 +165,7 @@ struct NewJournal: View {
                     }
 //                    .background(
 //                        Circle().fill(.ultraThinMaterial)
-                    .glassEffect(.regular.tint(purple).interactive())
+                    .glassEffect(.clear .tint(purple).interactive())
                     
                 }
                 .padding(.horizontal, 24)
@@ -193,7 +193,7 @@ struct NewJournal: View {
                                         .padding(.top, 26)
                                         .tint(purple)
                 }
-                .padding(.horizontal, 24)
+                .padding(.leading)
                 .padding(.top, 24)
                
                 Spacer(minLength: 24)
@@ -212,13 +212,14 @@ struct NewJournal: View {
 //                        .frame(width: 36, height: 5)
 //                        .padding(.top, 10)
 
-                    Text("Are you sure you want to discard\nchanges on this journal?")
+                    Text("Are you sure you want to discard changes on this journal?")
                         .font(.headline)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.white.opacity(0.9))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 20)
                         .padding(.top, 20)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     VStack(spacing: 10) {
                         // Destructive
@@ -237,6 +238,8 @@ struct NewJournal: View {
                                     Capsule()
                                         .fill(.ultraThinMaterial)
                                         .overlay(Capsule().stroke(Color.white.opacity(0.10)))
+                                        .glassEffect(.clear.interactive())
+
                                 )
                         }
 
@@ -252,10 +255,12 @@ struct NewJournal: View {
                                 .background(
                                     Capsule()
                                         .fill(.ultraThinMaterial)
-                                        .overlay(Capsule().stroke(Color.white.opacity(0.08)))
+                                        .overlay(Capsule().stroke(Color.black.opacity(0.08)))
+                                        .glassEffect(.clear.interactive())
                                 )
                         }
                     }
+                    
                     .padding(.horizontal, 14)
                     .padding(.bottom, 14)
                 }
@@ -264,6 +269,7 @@ struct NewJournal: View {
                    RoundedRectangle(cornerRadius: 28, style: .continuous)
                       // .fill(.ultraThinMaterial)
                        .glassEffect(.clear, in: .rect(cornerRadius: 28))
+                   
                      
                 )
                 .padding(.horizontal, 50)
