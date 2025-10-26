@@ -1,172 +1,62 @@
-////
-////  New Journal.swift
-////  Journali
-////
-////  Created by Najla on 29/04/1447 AH.
-////
-//
-//import SwiftUI
-//
-//struct NewJournal: View {
-//    private let purple = Color(red: 127/255, green: 129/255, blue: 255/255) // #D4C8FF
-//    @State private var titleText = ""
-//    @State private var bodyText = ""
-//    
-//    var body: some View {
-//        ZStack(alignment: .top) {
-//            
-//            
-//            
-//        ContainerRelativeShape()
-//            .fill(Color(red: 28/255, green: 28/255, blue: 30/255))
-//        
-//            Capsule()
-//                    .fill(Color.gray.opacity(0.5))
-//                    .frame(width: 40, height: 5)
-//                    .padding(.top, 12)
-//        //checkmark button
-//            HStack{
-//                
-//                Button(action: {
-//                })  {
-//                    Image(systemName: "xmark")
-//                        .font(.system(size: 20, weight: .medium))
-//                        .foregroundColor(.white)
-//                        .frame(width: 44, height:44)
-//                        .glassEffect(.clear .interactive())
-//                    
-//                    Spacer()
-//                    
-//                    //Cancel button
-//                    Button(action: {
-//                    })  {
-//                        Image(systemName: "checkmark")
-//                            .font(.system(size: 20, weight: .medium))
-//                            .foregroundColor(.black)
-//                            .frame(width: 44, height:44)
-//                            .glassEffect(.regular.tint(purple).interactive())
-//                        
-//                        
-//                        
-//                    }
-//                
-//            }
-//                .padding(.horizontal, 24)
-//                .padding(.top, 30)
-//              //  Spacer()
-//            }
-//            VStack (alignment: .leading, spacing: 12)  {
-//                TextField("Title", text: $titleText)
-//                    .font(Font.largeTitle.bold())
-//                    .foregroundColor(Color(.white))
-//                    
-//
-//                
-//                
-//                Text(Date.now.formatted(.dateTime.day().month().year()))
-//                    .padding(.bottom, 10)
-//                
-//                    .font(.title3)
-//                    .foregroundColor(Color(.gray))
-//                
-//                TextField("Type your Journal…", text: $bodyText)
-//                    .font(.title.weight(.regular))
-//                    .foregroundColor(Color(.white))
-//                    .padding(.top, 26)
-//                    
-//                    
-//                ZStack {
-//                    
-//                    Rectangle()
-//                    
-//                        .frame(width: 300, height: 212)
-//                        .cornerRadius(50)
-//                        .glassEffect(.clear, in: .rect(cornerRadius: 50))
-//                    
-//                    VStack {
-//                    Text("Are you sure you want to discard \nchanges on this journal?")
-//                        .font(.system(size: 17, weight: .regular))
-//                        .foregroundColor(.white)
-//                        
-//                    
-//                    
-//                               
-//                            
-//                        }
-//                    }
-//                }
-//                    
-//                
-//                
-//            }
-//            .padding(.horizontal, 24)
-//            .padding(.top, 100)
-//            
-//        }
-//        
-//        }
-//    }
-//
-//       
-//    
-//
-//
-//#Preview {
-//    NewJournal()
-//}
-//
 import SwiftUI
 
 struct NewJournal: View {
     private let purple = Color(red: 127/255, green: 129/255, blue: 255/255)
 
+    @Environment(\.dismiss) private var dismiss
+
     @State private var titleText = ""
     @State private var bodyText  = ""
     @State private var showDiscard = false
 
+    // 👇 Callback to send the created entry back to MainPage
+    var onSave: (Journal) -> Void = { _ in }
+
     var body: some View {
         ZStack(alignment: .top) {
             // ===== Background
-            
-             ContainerRelativeShape()
-                 .fill(Color(red: 28/255, green: 28/255, blue: 30/255))
+            ContainerRelativeShape()
+                .fill(Color(red: 28/255, green: 28/255, blue: 30/255))
+                .frame(width: 392.82, height: 793.46)
+               // .ignoresSafeArea()
 
-     
-                 Capsule()
-                         .fill(Color.gray.opacity(0.5))
-                         .frame(width: 40, height: 5)
-                         .padding(.top, 12)
+            Capsule()
+                .fill(Color.gray.opacity(0.5))
+                .frame(width: 40, height: 5)
+              //  .ignoresSafeArea()
+                .padding(.top, 12)
 
             // ===== Top bar
             VStack(spacing: 0) {
                 HStack {
-                    // X (left)
-                    Button {
-                        showDiscard = true
-                    } label: {
+                    // X (left) -> trigger discard dialog
+                    Button { showDiscard = true } label: {
                         Image(systemName: "xmark")
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                             .frame(width: 44, height: 44)
                     }
-//                    .background(Circle().fill(.ultraThinMaterial))
                     .glassEffect(.clear.interactive())
 
                     Spacer()
 
-                    // Checkmark (right)
+                    // Checkmark (right) -> save entry and dismiss
                     Button {
-                        // save action here
+                        let newEntry = Journal(
+                            title: titleText.isEmpty ? "Untitled" : titleText,
+                            date: .now,
+                            preview: bodyText,
+                            bookmarked: false
+                        )
+                        onSave(newEntry)   // ✅ send to MainPage
+                        dismiss()          // ✅ go back
                     } label: {
                         Image(systemName: "checkmark")
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.black)
                             .frame(width: 44, height: 44)
                     }
-//                    .background(
-//                        Circle().fill(.ultraThinMaterial)
                     .glassEffect(.clear .tint(purple).interactive())
-                    
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 30)
@@ -174,28 +64,26 @@ struct NewJournal: View {
                 // ===== Editor content
                 VStack(alignment: .leading, spacing: 12)  {
                     TextField("Title", text: $titleText)
-                                        .font(Font.largeTitle.bold())
-                                        .foregroundColor(Color(.white))
-                                        .tint(purple)
+                        .font(Font.largeTitle.bold())
+                        .foregroundColor(Color.white)
+                        .tint(purple)
+
+                    Text(Date.now.formatted(.dateTime.day().month().year()))
+                        .padding(.bottom, 10)
+                        .font(.title3)
+                        .foregroundColor(Color.gray)
+
+                    TextField("Type your Journal…", text: $bodyText, axis: .vertical)
+                        .font(.title.weight(.regular))
+                        .foregroundColor(Color.white)
+                        .padding(.top, 26)
+                        .tint(purple)
+                        
                     
-                    
-                    
-                    
-                                    Text(Date.now.formatted(.dateTime.day().month().year()))
-                                        .padding(.bottom, 10)
-                    
-                                        .font(.title3)
-                                        .foregroundColor(Color(.gray))
-                    
-                                    TextField("Type your Journal…", text: $bodyText)
-                                        .font(.title.weight(.regular))
-                                        .foregroundColor(Color(.white))
-                                        .padding(.top, 26)
-                                        .tint(purple)
                 }
                 .padding(.leading)
                 .padding(.top, 24)
-               
+
                 Spacer(minLength: 24)
             }
 
@@ -206,12 +94,6 @@ struct NewJournal: View {
                     .onTapGesture { withAnimation { showDiscard = false } }
 
                 VStack(spacing: 40) {
-                    // Grabber inside dialog
-//                    Capsule()
-//                        .fill(Color.white.opacity(0.35))
-//                        .frame(width: 36, height: 5)
-//                        .padding(.top, 10)
-
                     Text("Are you sure you want to discard changes on this journal?")
                         .font(.headline)
                         .multilineTextAlignment(.leading)
@@ -224,10 +106,11 @@ struct NewJournal: View {
                     VStack(spacing: 10) {
                         // Destructive
                         Button {
-                            // discard action
-                            withAnimation { showDiscard = false }
+                            // clear and go back
                             titleText = ""
-                            bodyText = ""
+                            bodyText  = ""
+                            withAnimation { showDiscard = false }
+                            dismiss()                      // ✅ pop back to MainPage
                         } label: {
                             Text("Discard Changes")
                                 .font(.headline)
@@ -239,7 +122,6 @@ struct NewJournal: View {
                                         .fill(.ultraThinMaterial)
                                         .overlay(Capsule().stroke(Color.white.opacity(0.10)))
                                         .glassEffect(.clear.interactive())
-
                                 )
                         }
 
@@ -260,23 +142,18 @@ struct NewJournal: View {
                                 )
                         }
                     }
-                    
                     .padding(.horizontal, 14)
                     .padding(.bottom, 14)
                 }
                 .frame(width: 300, height: 212)
                 .background(
-                   RoundedRectangle(cornerRadius: 28, style: .continuous)
-                      // .fill(.ultraThinMaterial)
-                       .glassEffect(.clear, in: .rect(cornerRadius: 28))
-                   
-                     
+                    RoundedRectangle(cornerRadius: 28, style: .continuous)
+                        .glassEffect(.clear, in: .rect(cornerRadius: 28))
                 )
                 .padding(.horizontal, 50)
                 .transition(.scale(scale: 0.96).combined(with: .opacity))
                 .zIndex(1)
-                
-
+                .multilineTextAlignment(.leading)
             }
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.9), value: showDiscard)
@@ -284,4 +161,3 @@ struct NewJournal: View {
 }
 
 #Preview { NewJournal() }
-
