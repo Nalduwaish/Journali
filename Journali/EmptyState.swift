@@ -154,7 +154,6 @@ struct EmptyState: View {
         .clipShape(Capsule())
         .glassEffect(.clear.interactive())
     }
-    
 }
 
 #Preview {
