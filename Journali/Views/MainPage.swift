@@ -4,6 +4,7 @@ import SwiftUI
 struct MainPage: View {
     @EnvironmentObject public var vm: JournalListViewModel
     private let purple = Color(red: 212/255, green: 200/255, blue: 255/255)
+    
 
     var body: some View {
         NavigationStack {

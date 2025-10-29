@@ -3,6 +3,7 @@ import Foundation
 import Combine
 import SwiftUI
 
+
 @MainActor
 final class JournalListViewModel: ObservableObject {
     enum SortKey { case byDateDesc, bookmarkedFirst }
@@ -56,5 +57,7 @@ final class JournalListViewModel: ObservableObject {
             $0.title.lowercased().contains(q) || $0.preview.lowercased().contains(q)
         }
     }
+ 
+
 }
 
