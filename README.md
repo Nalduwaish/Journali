@@ -12,16 +12,6 @@ Developed by **Najla Al-Duwaish**
 Journali offers a calm and minimal journaling experience focused on **emotional reflection and personal growth**.  
 With a simple interface and privacy-first design, it makes it easier to capture moments, revisit memories, and understand your journey.  
 
----
-
-## 🖼️ Screenshots  
-
-Below are a few previews of the Journali app interface.  
-
-| Splash Screen | Main Page | Entry View |
-|----------------|------------|-------------|
-| ![Splash Screen](assets/splash.png) | ![Main Page](Assets.xcassets/Main.imageset
-/Main.PNG) | ![Entry View](assets/entry.png) |
 
 ---
 
