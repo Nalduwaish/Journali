@@ -20,7 +20,8 @@ Below are a few previews of the Journali app interface.
 
 | Splash Screen | Main Page | Entry View |
 |----------------|------------|-------------|
-| ![Splash Screen](assets/splash.png) | ![Main Page](assets/main.png) | ![Entry View](assets/entry.png) |
+| ![Splash Screen](assets/splash.png) | ![Main Page](Assets.xcassets/Main.imageset
+/Main.PNG) | ![Entry View](assets/entry.png) |
 
 ---
 
